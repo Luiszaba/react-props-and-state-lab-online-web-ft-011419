@@ -4,9 +4,6 @@ import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
 class App extends React.Component {
-
-  // the objective of this react file is to use the components
-
   constructor() {
     super()
 
@@ -38,16 +35,16 @@ class App extends React.Component {
 
   // create callback prop to change whenever the value of <select> is changed with the value of the  <select>
   onChangeType = ({ target: {value} }) => {
-    this.setState({ filters: { ...this.state.filters, type: value }})
+    this.setState({ filters: { ...this.state.filters, type: value }});
   };
 
   // create function to find pets via iteration.   create and constant and set it to this.state.pets.  Iterate over the pets with map().  Return all the pets  whose ID matches the pet object.  Its easier to use the spread operator to return truthy objects for every pet object that isAdopted value is set to true
-  onAdoptPets = petID => {
+  onAdoptPet = petId => {
     const pets = this.state.pets.map(p => {
-      return p.id === petID ? { ...p, isAdopted: true } : p;
+      return p.id === petId ? { ...p, isAdopted: true } : p;
     });
     this.setState({ pets });
-  }
+  };
 
   render() {
     return (
@@ -58,26 +55,24 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
 
-
             <div className="four wide column">
-              <Filters />
+              <Filters 
               onChangeType = { this.onChangeType }
-              fetchPets = {this.fetchPets}
-              
+              onFindPetsClick = {this.fetchPets}
+              />
             </div>
-
 
             <div className="twelve wide column">
-              <PetBrowser />
-
+              <PetBrowser 
+              pets = {this.state.pets} 
+              onAdoptPet = {this.onAdoptPet}
+              />
 
             </div>
-
-
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
